@@ -1,0 +1,18 @@
+obj/
+bin/
+build/
+**/TestResults/*
+.vs/
+.fake
+
+*.db
+*.db-shm
+*.db-wal
+
+.DS_Store
+**/.DS_Store
+*.kra
+
+# ELK stack
+filebeat_ingest_data/
+logstash_ingest_data/
