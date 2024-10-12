@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Runtime\src\AyBorg.Runtime.csproj" />
-    <ProjectReference Include="..\..\Communication\src\AyBorg.Communication.csproj" />
+    <ProjectReference Include="..\..\Communication.gRPC\src\AyBorg.Communication.gRPC.csproj" />
   </ItemGroup>
 
 </Project>

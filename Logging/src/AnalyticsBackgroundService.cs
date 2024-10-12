@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using Ayborg.Gateway.Analytics.V1;
 using AyBorg.Communication;
 using Microsoft.Extensions.Hosting;
 
@@ -24,7 +25,7 @@ public sealed class AnalyticsBackgroundService : BackgroundService
 {
     private readonly IServiceConfiguration _serviceConfiguration;
     private readonly IAnalyticsCache _cache;
-    private readonly IEventLogClient _eventLogClient;
+    private readonly EventLog.EventLogClient _eventLogClient;
 
 
     /// <summary>
@@ -35,7 +36,7 @@ public sealed class AnalyticsBackgroundService : BackgroundService
     /// <param name="eventLogClient">Event log client</param>
     public AnalyticsBackgroundService(IServiceConfiguration serviceConfiguration,
                                         IAnalyticsCache analyticsCache,
-                                        IEventLogClient eventLogClient)
+                                        EventLog.EventLogClient eventLogClient)
     {
         _serviceConfiguration = serviceConfiguration;
         _cache = analyticsCache;
@@ -69,9 +70,10 @@ public sealed class AnalyticsBackgroundService : BackgroundService
             {
                 try
                 {
-                    if (_cache.TryDequeue(out EventEntry? request))
+                    if (_cache.TryDequeue(out Ayborg.Gateway.Analytics.V1.EventEntry? request))
                     {
-                        request = request with { ServiceType = _serviceConfiguration.TypeName, ServiceUniqueName = _serviceConfiguration.UniqueName };
+                        request.ServiceType = _serviceConfiguration.TypeName;
+                        request.ServiceUniqueName = _serviceConfiguration.UniqueName;
                         await _eventLogClient.LogEventAsync(request).ConfigureAwait(false);
                     }
                     else

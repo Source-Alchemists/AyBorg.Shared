@@ -19,6 +19,6 @@ namespace AyBorg.Logging;
 
 public interface IAnalyticsCache
 {
-    void Enqueue(EventEntry eventRequest);
-    bool TryDequeue(out EventEntry eventRequest);
+    void Enqueue(Ayborg.Gateway.Analytics.V1.EventEntry eventRequest);
+    bool TryDequeue(out Ayborg.Gateway.Analytics.V1.EventEntry eventRequest);
 }

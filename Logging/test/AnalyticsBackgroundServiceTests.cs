@@ -16,10 +16,10 @@
  */
 
 using Ayborg.Gateway.Analytics.V1;
-using AyBorg.SDK.System.Configuration;
+using AyBorg.Communication;
 using Moq;
 
-namespace AyBorg.SDK.Logging.Analytics.Tests;
+namespace AyBorg.Logging.Tests;
 
 public class AnalyticsBackgroundServiceTests
 {
@@ -40,7 +40,7 @@ public class AnalyticsBackgroundServiceTests
     {
         // Arrange
         CancellationTokenSource tokenSource = new();
-        EventEntry entry;
+        Ayborg.Gateway.Analytics.V1.EventEntry entry;
         _mockCache.Setup(m => m.TryDequeue(out entry)).Returns(canDequeue);
 
         // Act

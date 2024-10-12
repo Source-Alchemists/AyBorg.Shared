@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -44,10 +45,10 @@ public sealed class AnalyticsLogger : ILogger
     {
         if (!IsEnabled(logLevel)) return;
 
-        _cache.Enqueue(new EventEntry
+        _cache.Enqueue(new Ayborg.Gateway.Analytics.V1.EventEntry
         {
             ServiceUniqueName = string.Empty,
-            Timestamp = DateTime.UtcNow,
+            Timestamp = Timestamp.FromDateTime(DateTime.UtcNow),
             LogLevel = (int)logLevel,
             EventId = eventId.Id,
             Message = $"{formatter(state, exception)}"

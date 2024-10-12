@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Protobuf Include=".\Contracts\Gateway\registerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\commonV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\projectManagementV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\projectSettingsV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\editorV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\runtimeV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\storageV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\notifyV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Agent\deviceManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Analytics\eventLogV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Audit\auditV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Result\commonV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Result\storageV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Cognitive\fileManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Cognitive\projectManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Cognitive\annotationManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Cognitive\datasetManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\Cognitive\jobManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\CognitiveAgent\statusManagerV1.proto" GrpcServices="Both" />
+    <Protobuf Include=".\Contracts\Gateway\CognitiveAgent\jobManagerV1.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.66.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Runtime\src\AyBorg.Runtime.csproj" />
+    <ProjectReference Include="..\..\Communication\src\AyBorg.Communication.csproj" />
+  </ItemGroup>
+
+</Project>

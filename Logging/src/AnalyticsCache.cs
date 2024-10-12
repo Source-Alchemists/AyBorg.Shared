@@ -21,16 +21,16 @@ namespace AyBorg.Logging;
 
 public sealed class AnalyticsCache : IAnalyticsCache
 {
-    private readonly ConcurrentQueue<EventEntry> _queue = new();
+    private readonly ConcurrentQueue<Ayborg.Gateway.Analytics.V1.EventEntry> _queue = new();
 
-    public void Enqueue(EventEntry eventRequest)
+    public void Enqueue(Ayborg.Gateway.Analytics.V1.EventEntry eventRequest)
     {
         _queue.Enqueue(eventRequest);
     }
 
-    public bool TryDequeue(out EventEntry eventRequest)
+    public bool TryDequeue(out Ayborg.Gateway.Analytics.V1.EventEntry eventRequest)
     {
-        bool result = _queue.TryDequeue(out EventEntry? er);
+        bool result = _queue.TryDequeue(out Ayborg.Gateway.Analytics.V1.EventEntry? er);
         eventRequest = er!;
         return result;
     }
