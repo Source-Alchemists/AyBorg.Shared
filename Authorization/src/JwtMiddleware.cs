@@ -16,6 +16,7 @@
  */
 
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
@@ -30,17 +31,20 @@ public sealed class JwtMiddleware
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context, IJwtConsumer jwtConsumerService)
+    public async Task InvokeAsync(HttpContext context, ITokenValidator<JwtSecurityToken> tokenValidator)
     {
-        string? token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        string? token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ") is string[] parts && parts.Length > 0 ? parts[parts.Length - 1] : null;
         if (string.IsNullOrEmpty(token))
         {
             await _next(context).ConfigureAwait(false);
             return;
         }
 
-        System.IdentityModel.Tokens.Jwt.JwtSecurityToken validatedToken = jwtConsumerService.ValidateToken(token);
-        validatedToken?.Claims.ToList().ForEach(claim => context.User.AddIdentity(new ClaimsIdentity(new[] { claim }, "jwt")));
+        if (tokenValidator.Validate(token, out JwtSecurityToken validatedToken))
+        {
+            validatedToken.Claims.ToList().ForEach(claim => context.User.AddIdentity(new ClaimsIdentity(new[] { claim }, "jwt")));
+        }
+
         await _next(context).ConfigureAwait(false);
     }
 }
