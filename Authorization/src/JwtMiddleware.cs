@@ -42,7 +42,7 @@ public sealed class JwtMiddleware
 
         if (tokenValidator.Validate(token, out JwtSecurityToken validatedToken))
         {
-            validatedToken.Claims.ToList().ForEach(claim => context.User.AddIdentity(new ClaimsIdentity(new[] { claim }, "jwt")));
+            validatedToken.Claims.ToList().ForEach(claim => context.User.AddIdentity(new ClaimsIdentity([claim], "jwt")));
         }
 
         await _next(context).ConfigureAwait(false);

@@ -19,13 +19,13 @@ namespace AyBorg.Communication;
 
 public static class ServiceTypes
 {
-    public const string Gateway = "Gateway";
-    public const string Web = "Web";
-    public const string Dashboard = "Dashboard";
-    public const string Result = "Result";
-    public const string Agent = "Agent";
-    public const string Log = "Log";
-    public const string Audit = "Audit";
-    public const string Cognitive = "Cognitive";
+    public const string Gateway = nameof(Gateway);
+    public const string Frontend = nameof(Frontend);
+    public const string Dashboard = nameof(Dashboard);
+    public const string Result = nameof(Result);
+    public const string Agent = nameof(Agent);
+    public const string Log = nameof(Log);
+    public const string Audit = nameof(Audit);
+    public const string Cognitive = nameof(Cognitive);
     public const string CognitiveAgent = "Cognitive.Agent";
 }

@@ -34,7 +34,8 @@ public interface ITokenGenerator
     /// Generate service token
     /// </summary>
     /// <param name="serviceName">Service name</param>
-    /// <param name="roles">Roles</param>
+    /// <param name="serviceUniqueName">Service unique name</param>
+    /// <param name="version">Version</param>
     /// <returns>Token</returns>
-    string GenerateServiceToken(string serviceName, IEnumerable<string> roles);
+    string GenerateServiceToken(string serviceName, string serviceUniqueName, string version);
 }

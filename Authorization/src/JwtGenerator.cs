@@ -28,32 +28,43 @@ public sealed class JwtGenerator : ITokenGenerator
 {
     private readonly byte[] _secretKey;
 
-    public JwtGenerator(IOptions<SecurityConfiguration> configuration)
+    public JwtGenerator(IOptions<SecurityOptions> configuration)
     {
         _secretKey = Encoding.ASCII.GetBytes(configuration.Value.PrimarySharedKey.KeyValue);
     }
 
     public string GenerateUserToken(string userName, IEnumerable<string> roles)
     {
-        return GenerateToken(userName, roles);
-    }
-
-    public string GenerateServiceToken(string serviceName, IEnumerable<string> roles)
-    {
-        return GenerateToken(serviceName, roles);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private string GenerateToken(string name, IEnumerable<string> roles)
-    {
         var tokenHandler = new JwtSecurityTokenHandler();
         var claims = new List<Claim> {
-                new(ClaimTypes.Name, name),
+                new(ClaimTypes.Name, userName),
             };
+
         if (roles.Any())
         {
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
         }
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddHours(1),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_secretKey), SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
+    }
+
+    public string GenerateServiceToken(string serviceName, string serviceUniqueName, string version)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var claims = new List<Claim> {
+                new(ClaimTypes.Name, serviceUniqueName),
+                new(ClaimTypes.System, serviceName),
+                new(ClaimTypes.Version, version)
+            };
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),

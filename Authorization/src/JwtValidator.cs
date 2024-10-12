@@ -29,7 +29,7 @@ namespace AyBorg.Authorization;
 public class JwtValidator : ITokenValidator<JwtSecurityToken>
 {
     private readonly ILogger<JwtValidator> _logger;
-    private readonly IOptions<SecurityConfiguration> _securityConfiguration;
+    private readonly IOptions<SecurityOptions> _securityConfiguration;
     private readonly byte[] _secretKey;
 
     /// <summary>
@@ -37,7 +37,7 @@ public class JwtValidator : ITokenValidator<JwtSecurityToken>
     /// </summary>
     /// <param name="logger">Logger</param>
     /// <param name="securityConfiguration">Security configuration</param>
-    public JwtValidator(ILogger<JwtValidator> logger, IOptions<SecurityConfiguration> securityConfiguration)
+    public JwtValidator(ILogger<JwtValidator> logger, IOptions<SecurityOptions> securityConfiguration)
     {
         _logger = logger;
         _securityConfiguration = securityConfiguration;

@@ -17,10 +17,15 @@
 
 namespace AyBorg.Authorization;
 
-public record SecurityConfiguration
+public record SharedKeyOptions
 {
     /// <summary>
-    /// Gets or sets the primary shared key.
+    /// Gets or sets a value indicating whether this <see cref="SharedKeyOptions"/> is enabled.
     /// </summary>
-    public SharedKeyConfiguration PrimarySharedKey { get; init; } = new();
+    public bool Enabled { get; init; } = false;
+
+    /// <summary>
+    /// Gets or sets the key value.
+    /// </summary>
+    public string KeyValue { get; init; } = string.Empty;
 }
