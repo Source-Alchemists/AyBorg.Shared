@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using AyBorg.Types.Ports;
+using AyBorg.Types.Models;
 
 namespace AyBorg.Runtime.Devices;
 
@@ -23,4 +23,4 @@ public sealed record AddDeviceOptions(string ProviderName, string DeviceId, bool
 
 public sealed record ChangeDeviceStateOptions(string DeviceId, bool Activate);
 
-public sealed record UpdateDeviceOptions(string DeviceId, IEnumerable<Port> Ports);
+public sealed record UpdateDeviceOptions(string DeviceId, IEnumerable<PortModel> Ports);
