@@ -15,7 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 
@@ -52,23 +51,19 @@ public class BaseHubClient : IBaseHubClient
     /// <returns>A task that represents the asynchronous operation. The task result contains a value indicating whether the connection was successful.</returns>
     public async ValueTask<bool> TryConnectAsync(CancellationToken cancellationToken = default)
     {
-       while (true)
+        try
         {
-            try
-            {
-                await Connection.StartAsync(cancellationToken);
-                return true;
-            }
-            catch when (cancellationToken.IsCancellationRequested)
-            {
-                return false;
-            }
-            catch (HttpRequestException ex)
-            {
-                Logger.LogWarning(ex, "Failed to connect to the hub. Retrying in 5 seconds...");
-                Debug.Assert(Connection!.State == HubConnectionState.Disconnected);
-                await Task.Delay(5000, cancellationToken);
-            }
+            await Connection.StartAsync(cancellationToken);
+            return true;
+        }
+        catch when (cancellationToken.IsCancellationRequested)
+        {
+            return false;
+        }
+        catch (HttpRequestException ex)
+        {
+            Logger.LogTrace(ex, "Failed to connect to AyBorg hub.");
+            return false;
         }
     }
 }
