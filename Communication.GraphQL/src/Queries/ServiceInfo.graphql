@@ -1,0 +1,9 @@
+query GetServiceInfos {
+  serviceInfos {
+    id
+    name
+    type
+    uniqueName
+    version
+  }
+}
